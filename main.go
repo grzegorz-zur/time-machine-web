@@ -53,6 +53,10 @@ func getHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func setHandler(w http.ResponseWriter, r *http.Request) {
+	pid := strings.Trim(r.URL.Path, "/")
+	value := r.FormValue("value")
+	set(pid, value)
+	http.Redirect(w, r, r.URL.Path, http.StatusSeeOther)
 }
 
 func list() (tms []TimeMachine) {
@@ -88,4 +92,14 @@ func get(pid string) (tm TimeMachine) {
 		return
 	}
 	return
+}
+
+func set(pid, value string) {
+	file := path.Join(os.TempDir(), "timemachine-"+pid, "set")
+	data := []byte(value)
+	err := ioutil.WriteFile(file, data, os.ModeNamedPipe|0775)
+	if err != nil {
+		log.Println(err)
+		return
+	}
 }
