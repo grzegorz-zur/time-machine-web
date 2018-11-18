@@ -7,11 +7,13 @@ import (
 	"path"
 	"regexp"
 	"strconv"
+	"strings"
 )
 
 type TimeMachine struct {
-	Pid   string
-	Value int64
+	Pid     string
+	Command string
+	Value   int64
 }
 
 var (
@@ -30,7 +32,9 @@ func list() (tms []TimeMachine) {
 		if pids := pattern.FindStringSubmatch(name); pids != nil {
 			pid := pids[1]
 			tm := get(pid)
-			tms = append(tms, tm)
+			if tm.Command != "" {
+				tms = append(tms, tm)
+			}
 		}
 	}
 	return
@@ -38,6 +42,7 @@ func list() (tms []TimeMachine) {
 
 func get(pid string) (tm TimeMachine) {
 	tm.Pid = pid
+	tm.Command = command(tm.Pid)
 	file := path.Join(os.TempDir(), "timemachine-"+tm.Pid, "get")
 	data, err := ioutil.ReadFile(file)
 	if err != nil {
@@ -61,4 +66,15 @@ func set(pid, value string) {
 		log.Println(err)
 		return
 	}
+}
+
+func command(pid string) (cmd string) {
+	file := path.Join("/proc", pid, "cmdline")
+	data, err := ioutil.ReadFile(file)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	cmd = strings.Trim(string(data), "\x00")
+	return
 }
