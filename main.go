@@ -85,7 +85,7 @@ func get(pid string) (tm TimeMachine) {
 		log.Println(err)
 		return
 	}
-	text := strings.TrimSpace(string(data))
+	text := string(data)
 	tm.Value, err = strconv.ParseInt(text, 10, 64)
 	if err != nil {
 		log.Println(err)
