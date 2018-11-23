@@ -1,16 +1,18 @@
-<html>
-<head>
-<title>Time Machines</title>
-<link rel="icon" href="data:,"/>
-</head>
-<body>
-<h1>Time Machines</h1>
-<ul>
-{{range .}}
-<li>
-	<a href="{{.Pid}}">{{.Pid}} {{.Command}}</a>
-</li>
-{{end}}
-</ul>
-</body>
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Time Machines</title>
+		<link rel="icon" href="data:,"/>
+	</head>
+	<body>
+		<h1>Time Machines</h1>
+		<ul>
+			{{range .}}
+			<li>
+				<a href="{{.Pid}}">{{.Pid}}</a>
+				<span>{{.Command}}</span>
+			</li>
+			{{end}}
+		</ul>
+	</body>
 </html>

@@ -75,6 +75,6 @@ func command(pid string) (cmd string) {
 		log.Println(err)
 		return
 	}
-	cmd = strings.Trim(string(data), "\x00")
+	cmd = strings.Replace(string(data), "\x00", " ", -1)
 	return
 }

@@ -1,14 +1,18 @@
-<html>
-<head>
-<title>Time Machine {{.Pid}}</title>
-<link rel="icon" href="data:,"/>
-</head>
-<body>
-<h1>Time Machine {{.Pid}}</h1>
-<form method="post">
-<input name="value" type="number" value="{{.Value}}"/>
-<input type="reset"/>
-<input type="submit"/>
-</form>
-</body>
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Time Machine {{.Pid}}</title>
+		<link rel="icon" href="data:,"/>
+	</head>
+	<body>
+		<h1>Time Machine {{.Pid}}</h1>
+		<p>{{.Command}}</p>
+		<p>
+			<form method="post">
+				<input name="value" type="number" value="{{.Value}}"/>
+				<input type="reset"/>
+				<input type="submit"/>
+			</form>
+		</p>
+	</body>
 </html>
