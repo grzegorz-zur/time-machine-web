@@ -9,9 +9,53 @@
 		<p>{{.Command}}</p>
 		<p>
 			<form method="post">
-				<input name="value" type="number" value="{{.Value}}"/>
-				<input type="reset"/>
-				<input type="submit"/>
+				<p>
+					<div>
+						<label for="method_raw">Raw</label>
+						<input id="method_raw" type="radio" name="method" value="raw" {{if eq .Method "raw"}}checked{{end}}/>
+					</div>
+					<div>
+						<label for="value">Seconds</label>
+						<input id="value" name="value" type="number" value="{{.Value}}"/>
+					</div>
+				</p>
+				<p>
+					<div>
+						<label for="method_units">Units</label>
+						<input id="method_units" name="method" type="radio" value="units" {{if eq .Method "units"}}checked{{end}}/>
+					</div>
+					<div>
+						<label for="sign">Sign</label>
+						<select id="sign" name="sign">
+							<option value="1" {{if eq .Sign 1}}selected{{end}}>+</option>
+							<option value="-1" {{if eq .Sign -1}}selected{{end}}>-</option>
+						</select>
+					</div>
+					<div>
+						<label for="weeks">Weeks</label>
+						<input id="weeks" name="weeks" type="number" value="{{.Weeks}}"/>
+					</div>
+					<div>
+						<label for="days">Days</label>
+						<input id="days" name="days" type="number" value="{{.Days}}"/>
+					</div>
+					<div>
+						<label for="hours">Hours</label>
+						<input id="hours" name="hours" type="number" value="{{.Hours}}"/>
+					</div>
+					<div>
+						<label for="minutes">Minutes</label>
+						<input id="minutes" name="minutes" type="number" value="{{.Minutes}}"/>
+					</div>
+					<div>
+						<label for="seconds">Seconds</label>
+						<input id="seconds" name="seconds" type="number" value="{{.Seconds}}"/>
+					</div>
+				</p>
+				<p>
+					<input type="reset"/>
+					<input type="submit"/>
+				</p>
 			</form>
 		</p>
 	</body>
