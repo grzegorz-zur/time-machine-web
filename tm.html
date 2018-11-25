@@ -2,7 +2,17 @@
 <html lang="en">
 	<head>
 		<title>Time Machine {{.Pid}}</title>
-		<link rel="icon" href="data:,"/>
+		<link rel="icon" href="data:,">
+		<style>
+			label {
+				display: inline-block;
+				line-height: 2;
+				min-width: 20ex;
+			}
+			input[type=number] {
+				text-align: right;
+			}
+		</style>
 	</head>
 	<body>
 		<h1>Time Machine {{.Pid}}</h1>
@@ -11,7 +21,7 @@
 			<form method="post">
 				<p>
 					<div>
-						<label for="method_raw">Raw</label>
+						<label for="method_raw"><strong>Raw</strong></label>
 						<input id="method_raw" type="radio" name="method" value="raw" {{if eq .Method "raw"}}checked{{end}}/>
 					</div>
 					<div>
@@ -21,7 +31,7 @@
 				</p>
 				<p>
 					<div>
-						<label for="method_units">Units</label>
+						<label for="method_units"><strong>Units</strong></label>
 						<input id="method_units" name="method" type="radio" value="units" {{if eq .Method "units"}}checked{{end}}/>
 					</div>
 					<div>
@@ -54,7 +64,7 @@
 				</p>
 				<p>
 					<div>
-						<label for="method_datetime">Date and time</label>
+						<label for="method_datetime"><strong>Date and time</strong></label>
 						<input id="method_datetime" type="radio" name="method" value="datetime" {{if eq .Method "datetime"}}checked{{end}}/>
 					</div>
 					<div>
