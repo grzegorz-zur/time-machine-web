@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
+	"time"
 )
 
 var (
@@ -24,6 +25,8 @@ type Values struct {
 	Hours   int
 	Minutes int
 	Seconds int
+	Date    string
+	Time    string
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
@@ -54,6 +57,8 @@ func getHandler(w http.ResponseWriter, r *http.Request) {
 		vs.Method = methods[0]
 	}
 	vs.Sign, vs.Weeks, vs.Days, vs.Hours, vs.Minutes, vs.Seconds = split(tm.Value)
+	then := time.Unix(time.Now().UTC().Unix()+int64(tm.Value), 0)
+	vs.Date, vs.Time = then.Format("2006-01-02"), then.Format("15:04")
 	tmTmpl.Execute(w, vs)
 }
 
@@ -72,6 +77,10 @@ func setHandler(w http.ResponseWriter, r *http.Request) {
 		minutes := formInt(r, "minutes")
 		seconds := formInt(r, "seconds")
 		value = join(sign, weeks, days, hours, minutes, seconds)
+	case "datetime":
+		date := r.FormValue("date")
+		time := r.FormValue("time")
+		value = offset(timeParse(date, time))
 	}
 	set(pid, value)
 	http.Redirect(w, r, r.URL.Path+"?method="+method, http.StatusSeeOther)
@@ -88,5 +97,24 @@ func formInt(r *http.Request, name string) (value int) {
 		return
 	}
 	value = int(v)
+	return
+}
+
+func timeParse(dt, tm string) (t time.Time) {
+	text := dt + " " + tm
+	layout := "2006-01-02 15:04"
+	location := time.Now().Location()
+	t, err := time.ParseInLocation(layout, text, location)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	return
+}
+
+func offset(then time.Time) (seconds int) {
+	now := time.Now()
+	diff := then.Unix() - now.Unix()
+	seconds = int(diff)
 	return
 }

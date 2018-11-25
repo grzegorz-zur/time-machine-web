@@ -53,6 +53,20 @@
 					</div>
 				</p>
 				<p>
+					<div>
+						<label for="method_datetime">Date and time</label>
+						<input id="method_datetime" type="radio" name="method" value="datetime" {{if eq .Method "datetime"}}checked{{end}}/>
+					</div>
+					<div>
+						<label for="date">Date</label>
+						<input id="date" name="date" type="date" value="{{.Date}}"/>
+					</div>
+					<div>
+						<label for="time">Time</label>
+						<input id="time" name="time" type="time" value="{{.Time}}"/>
+					</div>
+				</p>
+				<p>
 					<input type="reset"/>
 					<input type="submit"/>
 				</p>
