@@ -83,7 +83,7 @@ func setHandler(w http.ResponseWriter, r *http.Request) {
 		value = offset(timeParse(date, time))
 	}
 	set(pid, value)
-	http.Redirect(w, r, r.URL.Path+"?method="+method, http.StatusSeeOther)
+	http.Redirect(w, r, pid+"?method="+method, http.StatusSeeOther)
 }
 
 func formInt(r *http.Request, name string) (value int) {
