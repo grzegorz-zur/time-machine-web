@@ -1,14 +1,16 @@
 package main
 
 import (
+	"flag"
 	"log"
 	"net/http"
 )
 
 func main() {
-	mux := http.NewServeMux()
-	mux.HandleFunc("/", handler)
-	err := http.ListenAndServe(":9876", mux)
+	listen := flag.String("listen", ":9876", "listen address")
+	flag.Parse()
+	http.HandleFunc("/", handler)
+	err := http.ListenAndServe(*listen, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
