@@ -58,7 +58,7 @@ func getHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	vs.Sign, vs.Weeks, vs.Days, vs.Hours, vs.Minutes, vs.Seconds = split(tm.Value)
 	then := time.Unix(time.Now().UTC().Unix()+int64(tm.Value), 0)
-	vs.Date, vs.Time = then.Format("2006-01-02"), then.Format("15:04")
+	vs.Date, vs.Time = then.Format("2006-01-02"), then.Format("15:04:05")
 	tmTmpl.Execute(w, vs)
 }
 
@@ -102,7 +102,8 @@ func formInt(r *http.Request, name string) (value int) {
 
 func timeParse(dt, tm string) (t time.Time) {
 	text := dt + " " + tm
-	layout := "2006-01-02 15:04"
+	log.Println(text)
+	layout := "2006-01-02 15:04:05"
 	location := time.Now().Location()
 	t, err := time.ParseInLocation(layout, text, location)
 	if err != nil {
